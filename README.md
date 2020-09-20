@@ -1,3 +1,4 @@
+![Image of Rex](https://www.wisst-ihr-noch.de/wp-content/uploads/2017/02/kommissar-rex.jpg)
 # wp-rex
 Your wordpress got hacked?  
 This simple tool helps you to find malicious code in your wordpress installation. 
