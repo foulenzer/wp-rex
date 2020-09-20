@@ -1,5 +1,6 @@
 # wp-rex
-Your wordpress got hacked? This tool helps you to find malicious code in your wordpress directory.
+Your wordpress got hacked?  
+This simple tool helps you to find malicious code in your wordpress installation. 
 
 ## Installation
 Just clone this repo and move following files into your wordpress root directory:
