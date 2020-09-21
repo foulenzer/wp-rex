@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# - finds all changed files for the last X days
+#
+# usage:
+#	./wp-rex-detector.sh DAYS
+
+# get DAYS, otherwise set to default
+if [ -z "$1" ]
+	then
+		DAYS=7
+	else
+		# be paranoid:
+		re='^[0-9]+$'
+		if ! [[ $1 =~ $re ]] ; then
+			echo "Error: Your argument has to be a number" >&2; exit 1
+		fi
+		DAYS=$1
+fi
+
+# GO!
+echo -e "\e[32m-----------------------------------------------------"
+echo -e "Checking files changed in the last ${DAYS} days... :"
+echo -e "-----------------------------------------------------\e[0m\e[31m"
+find . -mtime -$DAYS -name '*.php*' | grep -v "wp-rex*"
+echo -e "\e[0m"
+echo ''
+echo ''
+echo -e "\e[32m-----------------------------------------------------"
+echo -e "Checking files containing evil keywords changed in the last ${DAYS} days... :"
+echo -e "Please check these files manually!"
+echo -e "-----------------------------------------------------\e[0m\e[31m"
+find . -name "*.php*" | grep -v "wp-rex*" | xargs grep -iE "(((\%[[:alnum:]]{2,5}\%[[:alnum:]]{2,5}){5,})|(\/\*([[:alnum:]]){1,5}\*\/)|(((\\\[[:digit:]]{3}).?){3,}))"
+echo -e "\e[0m"
