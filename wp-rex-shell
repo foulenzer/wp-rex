@@ -27,7 +27,7 @@ echo -e "\e[0m"
 echo ''
 echo ''
 echo -e "\e[32m-----------------------------------------------------"
-echo -e "Checking files containing evil keywords changed in the last ${DAYS} days... :"
+echo -e "Checking files containing evil keywords:"
 echo -e "Please check these files manually!"
 echo -e "-----------------------------------------------------\e[0m\e[31m"
 find . -name "*.php*" | grep -v "wp-rex*" | xargs grep -iE "(((\%[[:alnum:]]{2,5}\%[[:alnum:]]{2,5}){5,})|(\/\*([[:alnum:]]){1,5}\*\/)|(((\\\[[:digit:]]{3}).?){3,}))"
