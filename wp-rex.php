@@ -21,7 +21,6 @@ function checksum () {
 
 	// GO!
 	echo nl2br("Starting checksum comparison:\n");
-
 	if ( defined( 'ABSPATH' ) ) {
 
 		// NECESSARY: include file to get wp-version
@@ -46,7 +45,6 @@ function checksum () {
 			}
 		}
 	}
-
 	echo nl2br("\n\n\n");
 }
 
@@ -60,10 +58,10 @@ function checksum () {
  */
 
 function detector() {
-
-	echo nl2br("Startung possible corrupted file detection:\n");
-	$cmd1 = "find . -mtime -7 -name '*.php*' | grep -v 'wp-rex*' | xargs grep -iP '(exec|system|gzinflate|eval|base64_decode)\s*\('";
-	$output = htmlentities(shell_exec($cmd1), ENT_QUOTES | ENT_IGNORE, "UTF8");
+	echo nl2br("Starting possible corrupted file detection:\n");
+	$regex = '"(((\%[[:alnum:]]{2,5}\%[[:alnum:]]{2,5}){5,})|(\/\*([[:alnum:]]){1,5}\*\/)|(((\\\\\[[:digit:]]{3}).?){3,}))"';
+	$cmd1 = 'find . -name "*.php*" | grep -v "wp-rex*" | xargs grep -iE '.$regex;
+	$output = htmlentities(shell_exec($cmd1), ENT_QUOTES | ENT_IGNORE);
 	if (is_string($output)) {
 		foreach (explode("\n", $output) as $file) {
 			echo nl2br($file."\n");
