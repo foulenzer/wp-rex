@@ -59,7 +59,7 @@ function checksum () {
 
 function detector() {
 	echo nl2br("Starting possible corrupted file detection:\n");
-	$regex = '"(((\%[[:alnum:]]{2,5}\%[[:alnum:]]{2,5}){5,})|(\/\*([[:alnum:]]){1,5}\*\/)|(((\\\\\[[:digit:]]{3}).?){3,}))"';
+	$regex = '"(((\%[[:alnum:]]{2,5}\%[[:alnum:]]{2,5}){5,})|(\/\*([[:alnum:]]){1,5}\*\/)|(((\\\\\[[:digit:]]{3}).?){3,}))|(eval\(base64_decode\()|(\/\*\*\* PHP Encode v1\.0 by zeura\.com \*\*\*\/)"';
 	$cmd1 = 'find . -name "*.php*" | grep -v "wp-rex*" | xargs grep -iE '.$regex;
 	$output = htmlentities(shell_exec($cmd1), ENT_QUOTES | ENT_IGNORE);
 	if (is_string($output)) {

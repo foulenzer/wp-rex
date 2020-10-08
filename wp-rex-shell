@@ -3,7 +3,7 @@
 # - finds all changed files for the last X days
 #
 # usage:
-#	./wp-rex-detector.sh DAYS
+#	./wp-rex-shell DAYS
 
 # get DAYS, otherwise set to default
 if [ -z "$1" ]
@@ -30,5 +30,5 @@ echo -e "\e[32m-----------------------------------------------------"
 echo -e "Checking files containing evil keywords:"
 echo -e "Please check these files manually!"
 echo -e "-----------------------------------------------------\e[0m\e[31m"
-find . -name "*.php*" | grep -v "wp-rex*" | xargs grep -iE "(((\%[[:alnum:]]{2,5}\%[[:alnum:]]{2,5}){5,})|(\/\*([[:alnum:]]){1,5}\*\/)|(((\\\[[:digit:]]{3}).?){3,}))"
+find . -name "*.php*" | grep -v "wp-rex*" | xargs grep -iEl "(((\%[[:alnum:]]{2,5}\%[[:alnum:]]{2,5}){5,})|(\/\*([[:alnum:]]){1,5}\*\/)|(((\\\[[:digit:]]{3}).?){3,}))|(eval\(base64_decode\()|(\/\*\*\* PHP Encode v1\.0 by zeura\.com \*\*\*\/)"
 echo -e "\e[0m"
