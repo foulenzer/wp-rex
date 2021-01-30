@@ -50,18 +50,53 @@ function checksum () {
 
 
 /**
- * function detector()
+ * function lastchanges()
  * 
  * searches for files changes in the last 7 days
+ * 
+ */
+
+function lastchanges() {
+	echo nl2br("Starting scanning for recently changed files:\n");
+
+	// Prepare data
+	$cmd1 = 'find . -type f | grep -v "wp-rex*"';
+
+	// Go!
+	$output = trim(htmlentities(shell_exec($cmd1), ENT_QUOTES | ENT_IGNORE));
+	if (is_string($output)) {
+		foreach (explode("\n", $output) as $file) {
+
+			// Check for last change less than 7 days
+			$stat = stat($file);
+			if ($stat['mtime'] > (time()-(7*24*60*60))) {
+				echo nl2br("$file : Last modified on: ".date("F-d-Y H:i:s.", $stat['mtime'])."\n");
+			}
+			if ($stat['ctime'] > (time()-(7*24*60*60))) {
+				echo nl2br("$file : Last file system change on: ".date("F-d-Y H:i:s.", $stat['ctime'])."\n");
+			}
+		}
+	}
+	echo nl2br("\n\n\n");
+}
+
+
+/**
+ * function snippets()
+ * 
  * searches for malicious code snippets used in most of the wordpress malware
  * 
  */
 
-function detector() {
-	echo nl2br("Starting possible corrupted file detection:\n");
+function snippets() {
+	echo nl2br("Starting scanning for malicous snippets:\n");
+
+	// Prepare data
 	$regex = '"(((\%[[:alnum:]]{2,5}\%[[:alnum:]]{2,5}){5,})|(\/\*([[:alnum:]]){1,5}\*\/)|(((\\\\\[[:digit:]]{3}).?){3,}))|(eval\(base64_decode\()|(\/\*\*\* PHP Encode v1\.0 by zeura\.com \*\*\*\/)"';
-	$cmd1 = 'find . -name "*.php*" | grep -v "wp-rex*" | xargs grep -iE '.$regex;
-	$output = htmlentities(shell_exec($cmd1), ENT_QUOTES | ENT_IGNORE);
+	$cmd2 = 'find . -name "*.php*" | grep -v "wp-rex*" | xargs grep -iE '.$regex;
+
+	// Go!
+	$output = htmlentities(shell_exec($cmd2), ENT_QUOTES | ENT_IGNORE);
 	if (is_string($output)) {
 		foreach (explode("\n", $output) as $file) {
 			echo nl2br($file."\n");
@@ -84,6 +119,7 @@ function detector() {
  */
 
 checksum();
-detector();
+lastchanges();
+snippets();
 
 ?>

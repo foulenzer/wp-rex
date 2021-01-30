@@ -21,12 +21,13 @@ If there is no redirect (e.g. in the .htaccess-file or via malware) and you can 
 
 ### Command line access
 If you do not have web access to your blog, connect to your webspace/server via the command line / SSH and navigate to your wordpress root-directory. Then execute following command:
-- `./wp-rex-detector DAYS` (DAYS = check changed file for the last X days - default: 7)
+- `./wp-rex-detector DAYS` (DAYS = check changed files for the last X days - default: 7)
 
 ## To-Do
 - [x] all-in-one script via url-access
 - [x] removed "md5" from search expressions (thx to @felsqualle)
 - [x] new regex
+- [x] implemented correct modification changes to php-file
 - [ ] add new regexes on a regular basis
 - [ ] check for bad file permissions?
 - [ ] more cool features (send me a feature request @foulenzer)
