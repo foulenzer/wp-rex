@@ -16,31 +16,31 @@
 
 function checksum () {
 
-	// define ABSPATH for wordpress directory
+	// Define ABSPATH for wordpress directory
 	define('ABSPATH', './');
 
-	// GO!
+	// Go!
 	echo nl2br("Starting checksum comparison:\n");
-	if ( defined( 'ABSPATH' ) ) {
+	if (defined('ABSPATH')) {
 
 		// NECESSARY: include file to get wp-version
-		include( ABSPATH . 'wp-includes/version.php' );
+		include(ABSPATH.'wp-includes/version.php');
 		
-		// get locales
-		$wp_locale = isset( $wp_local_package ) ? $wp_local_package : 'en_US';
+		// Get locales
+		$wp_locale = isset($wp_local_package) ? $wp_local_package : 'en_US';
 		
-		// set wp-api-url and get checksums from wordpress api
-		$apiurl = 'https://api.wordpress.org/core/checksums/1.0/?version=' . $wp_version . '&locale=' .  $wp_locale;
-		$json = json_decode ( file_get_contents ( $apiurl ) );
+		// Set wp-api-url and get checksums from wordpress api
+		$apiurl = 'https://api.wordpress.org/core/checksums/1.0/?version='.$wp_version.'&locale='.$wp_locale;
+		$json = json_decode(file_get_contents($apiurl));
 		$checksums = $json->checksums;
 
-		// iterate over all files to compare checksums
-		foreach( $checksums as $file => $checksum ) {
-			$file_path = ABSPATH . $file;
-			if ( file_exists( $file_path ) ) {
-				if ( md5_file ($file_path) !== $checksum ) {
-					// do something when a checksum doesn't match
-					echo nl2br("WARNING! Checksum for " .$file_path ." does not match!\n");
+		// Iterate over all files to compare checksums
+		foreach($checksums as $file => $checksum) {
+			$file_path = ABSPATH.$file;
+			if (file_exists($file_path)) {
+				if (md5_file($file_path) !== $checksum) {
+					// Do something when a checksum doesn't match
+					echo nl2br("WARNING! Checksum for ".$file_path ." does not match!\n");
 				}
 			}
 		}
