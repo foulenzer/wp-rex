@@ -38,9 +38,11 @@ function checksum () {
 
 		// Iterate over all files to compare checksums
 		foreach($checksums as $file => $checksum) {
+
 			$file_path = ABSPATH.$file;
 			if (file_exists($file_path)) {
 				if (md5_file($file_path) !== $checksum) {
+					
 					// Do something when a checksum doesn't match
 					echo nl2br("WARNING! Checksum for ".$file_path ." does not match!\n");
 				}
